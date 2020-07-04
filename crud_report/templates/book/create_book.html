@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="create_book" content="width=device-width, initial-scale=1.0">
+    <title>crear libro</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ Book_form.as_p }}
+        <button type="submit">crear</button>
+    </form>
+</body>
+</html>
