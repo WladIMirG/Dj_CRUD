@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block titulo %}
+  Edicion de libros
+{% endblock titulo %}
+
+{% block body %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+      <strong>Editando</strong>
+    </div>
+    <div class="card-body card-block">
+      <form action="#" method="POST" enctype="multipart/form-data" class="form-horizontal">
+        {{ form.as_p }}
+        <div class="modal-footer">
+          <button href="{% url 'book:list_book' %}" class="btn btn-danger">Cancelar</button>
+          <button class="btn btn-success" type="submit">Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</form>
+{% endblock body %}

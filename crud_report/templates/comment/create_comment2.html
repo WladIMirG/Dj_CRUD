@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block titulo %}
+Registro de comentario
+{% endblock titulo %}
+
+{% block body %}
+
+<form method="POST">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+      <strong>{% block etiqueta %}Formulario | Edicion de commentarios{% endblock etiqueta %}</strong>
+    </div>
+    {% block formulario %}
+    <div class="card-body card-block">
+      <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+        {{ form.as_p }}
+        <div class="modal-footer">
+          <a href="{% url 'comment:list_comment' %}" class="btn btn-danger">Cancelar</a>
+          <button type="submit" class="btn btn-success">Registrar</button>
+        </div>
+      </form>
+    </div>
+    {% endblock formulario %}
+  </div>
+</form>
+
+
+{% endblock body %}

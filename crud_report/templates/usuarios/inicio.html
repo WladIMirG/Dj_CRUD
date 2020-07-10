@@ -1,11 +1,14 @@
 {% extends 'index.html' %}
 {% load static %}
+
 {% block titulo %}
-Biblioteca.dev | Listado de Usuarios
+Listado de Usuarios
 {% endblock titulo %}
+
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/lib/datatable/dataTables.bootstrap.min.css' %}">
 {% endblock extra_css %}
+
 {% block body %}
 <div class="card">
     <div class="card-header">

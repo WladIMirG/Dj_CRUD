@@ -2,25 +2,51 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View,TemplateView,ListView,UpdateView,CreateView,DeleteView
 from django.urls import reverse_lazy
-from .models import *
+from .models import Book
 from .forms import BookForm
 
-def Home(request):
-    return render(request, 'index.html')
+class CreateBook(CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'book/create_book.html'
+    success_url = reverse_lazy('book:list_book')
+
+class ListBook(View):
+    model = Book
+    form_class = BookForm
+    template_name = 'book/list_book.html'
+    queryset = Book.objects.filter(state = True)
+
+    def get_queryset(self):
+        return self.model.objects.filter(state = True)
+
+    def get_context_data(self,**kwargs):
+        contexto = {}
+        contexto['book'] = self.get_queryset()
+        contexto['form'] = self.form_class
+        return contexto
+
+    def get(self,request,*args,**kwargs):
+        return render(request,self.template_name,self.get_context_data())
 
 
-def CreateBook(request):
-    print('ENTRE AL METODO CreateBook',request.method)
-    if request.method == 'POST':
-        print('ENTRO Y LA RESPUESTA ES POST')
-        Book_Form = BookForm(request.POST)
-        if Book_Form.is_valid:
-            Book_Form.save()
-            return redirect('index')
-    else:
-        print('ENTRO SIEMPRE AL SINO')
-        Book_Form = BookForm()
+class UpdateBook(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'book/edit_book.html'
+    success_url = reverse_lazy('book:list_book')
 
-    return render(request, 'book/create_book.html',{'Book_form':Book_Form})
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book_form'] = Book.objects.filter(state = True)
+        return context
 
-# Create your views here.
+class DeleteBook(DeleteView):
+    model = Book
+    success_url = reverse_lazy('book:list_book')
+
+#    def post(self,request,pk,*args,**kwargs):
+#        object = Book.objects.get(id_book = pk)
+#        object.state = False
+#        object.save()
+#        return redirect('book:list_book')

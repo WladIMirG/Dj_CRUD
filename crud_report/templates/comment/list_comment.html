@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+
+{% block titulo %}
+Listado de Libros
+{% endblock titulo %}
+
+{% block body %}
+
+{% if comment %}
+<div class="card">
+  <div class="modal-footer">
+    <a href="{% url 'usuarios:generar_reporte' 2 %}" class="btn btn-primary" type="button" >Generar reporte</a>
+    <!--
+      <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'comment:create_comment' %}');">Comentar</button>
+    -->
+  </div>
+  <div class="card-header">
+    <strong class="card-title">Listado de Libros</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID comment</th>
+          <th>Libro</th>
+          <th>Usuario</th>
+          <th>Comentario</th>
+          <th>Fecha de creacion</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+          
+        {% for Comment in comment %}
+        <tr>
+          <td>{{ Comment.id_comment }}</td>
+          <td>{{ Comment.id_book }}</td>
+          <td>{{ Comment.user }}</td>
+          <td>{{ Comment.text }}</td>
+          <td>{{ Comment.created_date }}</td>
+          <td>
+            <div class="card">
+              <button onclick="abrir_modal_edicion('{% url 'comment:update_comment' Comment.id_comment %}');" class="btn btn-primary">Editar</button>
+              <button onclick="abrir_modal_eliminacion('{% url 'comment:delete_comment' Comment.id_comment %}');" class="btn btn-danger">Eliminar</button>
+
+              <!--
+                <button onclick="abrir_modal_edicion('{% url 'comment:delete_comment' Comment.id_comment %}');" class="btn btn-danger">Eliminar</button>
+                <button onclick="abrir_modal_edicion('{% url 'comment:update_comment' Comment.id_comment %}');" class="btn btn-primary">Editar</button>
+                <a href="{% url 'comment:delete_comment' Comment.id_comment %}" class="btn btn-danger">Eliminar</a>
+                <a href="{% url 'comment:update_comment' Comment.id_comment %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'comment:delete_comment' Comment.id_comment %}" class="btn btn-danger">Eliminar</a>
+
+              -->
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="card">
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'comment:create_comment' %}');">Comentar</button>
+  </div>
+</div>
+<h1>No existen comentarios registrados</h1>
+
+{% endif %}
+
+<div class="modal fade" id="creacion" role="dialog">
+
+</div>
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+
+<div class="modal fade" id="eliminacion" role="dialog">
+
+</div>
+
+{% endblock body %}

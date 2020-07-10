@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block titulo %}Bienvenido a Biblioteca.dev {% endblock titulo %}</title>
+    <title>{% block titulo %}Bienvenido{% endblock titulo %}</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+
     <link rel="stylesheet" href="{% static 'css/cs-skin-elastic.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_css %}
@@ -31,25 +32,38 @@
                     </li>
                     {% if request.user.is_superuser %}
                     <li class="menu-item-has-children dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa fa-users"></i>Usuarios</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="{% url 'usuarios:inicio_usuarios' %}">Listado de Usuarios</a></li>                            
+                            <li><i class="fa fa-table"></i>
+                                <a href="{% url 'usuarios:inicio_usuarios' %}">Listado de Usuarios</a>
+                            </li>                            
                         </ul>
                     </li>
                     {% endif %}
+                    <!--Seccion de Libros-->
                     <li class="menu-item-has-children dropdown">
-                       <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Autores</a>
-                       <ul class="sub-menu children dropdown-menu">
-                           
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="menu-icon fa fa-book">
+
+                            </i>Libros
+                        </a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!--
+                                <li><i class="fa fa-pencil"></i><a href="{% url 'book:create_book' %}">Crear Libros</a></li>
+                            -->
+                            <li><i class="fa fa-table"></i><a href="{% url 'book:list_book' %}">Listado de Libros</a></li>
                        </ul>
                     </li>
+                    <!--Seccion de Comentario-->
                     <li class="menu-item-has-children dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Libros</a>
-                       <ul class="sub-menu children dropdown-menu">
-                           
-                          
-                       </ul>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Comentarios</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!--
+                                <li><i class="fa fa-pencil"></i><a href="{% url 'comment:create_comment' %}">Crear Comentario</a></li>
+                            -->
+                            <li><i class="fa fa-table"></i><a href="{% url 'comment:list_comment' %}">Listado de Comentarios</a></li>
+                        
+                        </ul>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -62,8 +76,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{% static 'images/logo.png' %}" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="{% static 'images/logo.png' %}" alt="Logo"></a>
+                    <a class="navbar-brand" href="./"><img src="{% static 'images/logo5.png' %}" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="{% static 'images/logo5.png' %}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -76,7 +90,7 @@
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>Perfil</a>
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Administración</a>
-                            
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -93,13 +107,14 @@
                             <div class="card bg-primary">
                                 <div class="card-body">
                                     <blockquote class="blockquote mb-0 text-light text-center">
-                                        <h1 class="text-light">{{ user.username | upper }} BIENVENIDO A BIBLIOTECA.DEV</h1>
-                                        <footer class="blockquote-footer text-light">"Google puede darte 100.00 respuestas, el Bibliotecario puede darte la correcta." -<cite title="Neil Gaiman">Neil Gaiman</cite></footer>
+                                        <h1 class="text-light">BIENVENIDO {{ user.username | upper }}</h1>
+                                        <footer class="blockquote-footer text-light">"Comenta los Libros" - <cite title="Neil Gaiman"></cite></footer>
                                     </blockquote>
                                 </div>
                             </div>
                         </div>
                       {% endblock body %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,4 +156,5 @@
     {% block extrajs %}
     {% endblock extrajs %}
 </body>
+
 </html>

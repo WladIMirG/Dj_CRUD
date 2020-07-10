@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    #invoice thead tr {
+        padding: 0;
+    }
+    .text-center {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <img src="" alt="" class="img-invoice">
+    <p class="head">
+        <b>REPORTE DE COMENTARIOS</b><br>
+        <br>
+        <br>
+        <br>
+    </p>
+    <p>
+        <b>LISTADO</b><br>
+    </p>
+    <table id="invoice">
+        <thead>
+            <tr>
+                <th style="width: 5%; text-align: center">ID</th>
+                <th style="width: 15%; text-align: center">LIBRO</th>
+                <th style="width: 30%; text-align: center">USUARIO</th>
+                <th style="width: 40%; text-align: center">COMENTARIO</th>
+                <th style="width: 10%; text-align: center">FECHA DE CREACION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Aqui puede ir un for-->
+            {% if comment %}
+            {% for Comment in comment %}
+            <tr style="padding-top: 3px;">
+                <td class="text-center"> {{ Comment.id_comment }} </td>
+                <td class="text-center"> {{ Comment.id_book }}</td>
+                <td class="text-center">{{ Comment.user }}</td>
+                <td class="text-center">{{ Comment.text }}</td>
+                <td style="text-align: right;">{{ Comment.created_date }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+
+            <tr style="border-top: 1px solid black; padding-top: 4px;">
+                <td colspan="4"> <b>ALGO AQUI 1</b> </td>
+                <td style="text-align: right;"> Variable 14 </td>
+            </tr>
+            <tr style="padding-top: 4px;">
+                <td colspan="4"> <b>ALGO AQUI 2</b> </td>
+                <td style="text-align: right;"> Variable 15 </td>
+            </tr>
+            <tr style="padding-top: 4px;">
+                <td colspan="4"> <b>ALGO AQUI 3</b> </td>
+                <td style="text-align: right;"> Variable 16 </td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="margin-top: 250px;">
+        <thead>
+            <tr>
+                <th>***AGRADECIMIENTOS POR ESTE PDF***</th>
+            </tr>
+            <tr>
+                <th>ESTE ES EL MENSAJE FINAL</th>
+            </tr>
+        </thead>
+    </table>
+
+</body>
+
+</html>

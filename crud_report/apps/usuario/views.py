@@ -9,13 +9,61 @@ from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView,TemplateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView,TemplateView, View
 from apps.usuario.models import Usuario
 from apps.usuario.forms import FormularioLogin, FormularioUsuario
 from apps.usuario.mixins import LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin
+from apps.book.models import Book
+from apps.comment.models import Comment
+from apps.book.views import ListBook
+
+import os
+from django.conf import settings
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+
 
 _HOME = 'home.html'
 _INDEX = 'index.html'
+
+class SalePDF(View):
+    Book = Book
+    Comment = Comment
+    def get_context_data(self):
+        context = {}
+        context['book'] = Book.objects.filter(state = True)
+        context['comment'] = Comment.objects.filter()
+        return context
+
+
+
+    def get(self, request, pk, *args, **kwargs):
+        #try:
+        if pk == 1:
+            template_path = 'pdf/genpdf.html'
+        else:
+            template_path = 'pdf/comment_genpdf.html'
+#        context = {
+#            'title':'Este es mi primer pdf',
+#            'book': Book.objects.filter(state = True),}
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+        
+        template = get_template(template_path)
+        html = template.render(self.get_context_data())
+
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+        #except:
+        #    pass
+        #return HttpResponseRedirect(reverse_lazy('book:list_book'))
+        #return HttpResponse("Hola")
+
+
+
 
 class Inicio(LoginRequiredMixin,TemplateView):
     """Clase que renderiza el index del sistema"""
@@ -45,7 +93,10 @@ def logoutUsuario(request):
     return HttpResponseRedirect('/accounts/login/')
 
 
-class InicioUsuarios(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin, TemplateView):
+class InicioUsuarios(
+    LoginYSuperStaffMixin,
+    ValidarPermisosRequeridosUsuariosMixin,
+    TemplateView):
     template_name='usuarios/inicio.html'
 
 
@@ -59,7 +110,7 @@ class ListadoUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMix
         if request.is_ajax():
             return HttpResponse(serialize('json', self.get_queryset()), 'application/json')
         else:
-            return redirect('usuarios:inicio')
+            return redirect('usuarios:inicio_usuarios')
 
 
 class RegistrarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin, CreateView):
@@ -91,7 +142,7 @@ class RegistrarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosM
                 response.status_code = 400
                 return response
         else:
-            return redirect('usuarios:inicio')
+            return redirect('usuarios:inicio_usuarios')
 
 
 class EditarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin, UpdateView):
@@ -116,7 +167,7 @@ class EditarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixi
                 response.status_code = 400
                 return response
         else:
-            return redirect('usuarios:inicio')
+            return redirect('usuarios:inicio_usuarios')
 
 
 class EliminarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin, DeleteView):
@@ -134,4 +185,4 @@ class EliminarUsuario(LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMi
             response.status_code = 201
             return response
         else:
-            return redirect('usuarios:inicio')
+            return redirect('usuarios:inicio_usuarios')
