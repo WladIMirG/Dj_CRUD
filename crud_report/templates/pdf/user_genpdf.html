@@ -1,0 +1,34 @@
+{% extends 'pdf/genpdf.html' %}
+
+{% block encabezado %}
+        
+    REPORTE DE USUARIOS<br>
+
+{% endblock encabezado %}
+
+
+{% block thead %}
+<tr>
+    <th style="width: 5%; text-align: center">ID</th>
+    <th style="width: 15%; text-align: center">USERNAME</th>
+    <th style="width: 30%; text-align: center">NOMBRES</th>
+    <th style="width: 40%; text-align: center">APELLIDOS</th>
+    <th style="width: 10%; text-align: center">EMAIL</th>
+</tr>  
+{% endblock thead %}
+
+{% block llenado %}
+
+{% if usuario %}
+{% for Us in usuario %}
+<tr style="padding-top: 3px;">
+    <td class="text-center"> {{ Us.id }} </td>
+    <td class="text-center"> {{ Us.username }}</td>
+    <td class="text-center">{{ Us.nombres }}</td>
+    <td class="text-center">{{ Us.apellidos }}</td>
+    <td style="text-align: right;">{{ Us.email }}</td>
+</tr>
+{% endfor %}
+{% endif %}  
+
+{% endblock llenado %}

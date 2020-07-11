@@ -15,7 +15,7 @@ Listado de Libros
 {% if book %}
 <div class="card">
   <div class="modal-footer">
-    <a href="{% url 'usuarios:generar_reporte' 1 %}" class="btn btn-primary" type="button" >Generar reporte</a>
+    <a href="{% url 'usuarios:generar_reporte' 2 %}" class="btn btn-primary" type="button" >Generar reporte</a>
     <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'book:create_book' %}');">Crear Libro</button>
   </div>
   <div class="card-header">

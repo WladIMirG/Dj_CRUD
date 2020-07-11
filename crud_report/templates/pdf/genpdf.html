@@ -37,64 +37,64 @@
 </style>
 
 <body>
-    <img src="" alt="" class="img-invoice">
+    <img src="{{ icon }}" class="img-invoice">
     <p class="head">
+        
+        {% block encabezado %}
+        
         REPORTE DE COMENTARIOS<br>
-        VARIABLE 2<br>
-        Variable 3<br>
-        Cariable 4<br>
+
+        {% endblock encabezado %}
+
+        {{ comp.nombre|upper }}<br>
+        {{ comp.direccion }}<br>
+        {{ comp.telefono }}<br>
+        {{ comp.web }}<br>
+        
     </p>
-    <p>
-        <b>FACTURA</b> Variable 5 <br>
-        <b>FECHA DE VENTA</b> Variable 6 <br>
-        <b>CLIENTE</b> Variable 7 <br>
-        <b>DNI</b> Variable 8 <br>
-    </p>
+    {% block tabla %}
     <table id="invoice">
         <thead>
+            {% block thead %}
             <tr>
-                <th style="width: 5%; text-align: center">ID</th>
-                <th style="width: 15%; text-align: center">LIBRO</th>
-                <th style="width: 30%; text-align: center">USUARIO</th>
-                <th style="width: 40%; text-align: center">COMENTARIO</th>
-                <th style="width: 10%; text-align: center">FECHA DE CREACION</th>
-            </tr>
+                <th style="width: 10%; text-align: center">ID</th>
+                <th style="width: 45%; text-align: center">LIBRO</th>
+                <th style="width: 45%; text-align: center">FECHA DE PUBLUCACION</th>
+            </tr>  
+            {% endblock thead %}
         </thead>
         <tbody>
             <!--Aqui puede ir un for-->
+            {% block llenado %}
+            
             {% if book %}
             {% for Book in book %}
             <tr style="padding-top: 3px;">
                 <td class="text-center"> {{ Book.id_book }} </td>
-                <td class="text-center">Variable 10</td>
-                <td class="text-center">Variable 11</td>
-                <td class="text-center">Variable 12</td>
-                <td style="text-align: right;">$Variable 13</td>
+                <td class="text-center"> {{ Book.title}} </td>
+                <td class="text-center"> {{ Book.publications_date }} </td>
             </tr>
             {% endfor %}
             {% endif %}
 
+            {% endblock llenado %}
+            
+
             <tr style="border-top: 1px solid black; padding-top: 4px;">
-                <td colspan="4"> <b>ALGO AQUI 1</b> </td>
-                <td style="text-align: right;"> Variable 14 </td>
-            </tr>
-            <tr style="padding-top: 4px;">
-                <td colspan="4"> <b>ALGO AQUI 2</b> </td>
-                <td style="text-align: right;"> Variable 15 </td>
-            </tr>
-            <tr style="padding-top: 4px;">
-                <td colspan="4"> <b>ALGO AQUI 3</b> </td>
-                <td style="text-align: right;"> Variable 16 </td>
+                <td colspan="4"> <b>Cualquier informacion se pueden dirigir a:</b> </td>
+                <td style="text-align: right;"> {{ comp.mail }} </td>
             </tr>
         </tbody>
-    </table>
-    <table style="margin-top: 250px;">
+    </table>  
+    {% endblock tabla %}
+    
+    <table style="margin-top: 50px;">
         <thead>
             <tr>
-                <th>***AGRADECIMIENTOS POR ESTE PDF***</th>
+                <th>AGRADECIMIENTOS POR ESTE PDF A:</th>
             </tr>
             <tr>
-                <th>ESTE ES EL MENSAJE FINAL</th>
+                <th>ingwladimirgarces@gmail.com</th>
             </tr>
         </thead>
     </table>

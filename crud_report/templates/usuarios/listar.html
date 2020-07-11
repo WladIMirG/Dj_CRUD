@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+
+{% block titulo %}
+Listado de Libros
+{% endblock titulo %}
+
+{% block body %}
+<!--
+<div class="card">
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'book:create_book' %}');">Crear Libro</button>
+  </div>
+</div>
+-->
+<div class="card">
+    <div class="modal-footer">
+      <a href="{% url 'usuarios:generar_reporte' 1 %}" class="btn btn-primary" type="button" >Generar reporte</a>
+      <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'usuarios:registrar_usuario' %}');">Registrar Usuario</button>
+    </div>
+</div>
+{% if object_list %}
+<div class="card">
+  
+  <div class="card-header">
+    <strong class="card-title">Listado de Usuarios</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>USERNAME</th>
+          <th>NOMBRES</th>
+          <th>APELLIDOS</th>
+          <th>EMAIL</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for Usuario in object_list %}
+        <tr>
+          <td>{{ Usuario.id }}</td>
+          <td>{{ Usuario.username }}</td>
+          <td>{{ Usuario.nombres }}</td>
+          <td>{{ Usuario.apellidos }}</td>
+          <td>{{ Usuario.email }}</td>
+          <td>
+            
+            
+            <button onclick="abrir_modal_edicion('{% url 'usuarios:actualizar_usuario' Usuario.id %}');" class="btn btn-primary">Editar</button>
+            <button onclick="abrir_modal_eliminacion('{% url 'usuarios:eliminar_usuario' Usuario.id %}');" class="btn btn-danger">Eliminar</button>
+
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="card">
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'usuario:registrar_usuario' %}');">Crear Usuario</button>
+  </div>
+</div>
+<h1>No existen usuarios registrados</h1>
+{% endif %}
+
+<!-- En esta parte defino los div para los modales-->
+
+<div class="modal fade" id="creacion" role="dialog">
+
+</div>
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+
+<div class="modal fade" id="eliminacion" role="dialog">
+
+</div>
+
+{% endblock body %}
