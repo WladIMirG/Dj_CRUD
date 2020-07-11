@@ -4,40 +4,40 @@ Caracteristicas:
 - Las versiones que se usan en este proyecto son las de Python 3.8 y Django 3.0.7
 
  Instrucciones:
+ - Configuracion de espacio de trabajo:
+    *   Instalar python 3.8.2
+    **  Actualizar pip a la version 20.1.1
+            
+            pip install --upgrade pip
 
-	La prueba de conocimiento se basa en 2 fases Backend y Frontend, los cuales al deben conectar entre sí.
-     Backend
-        Modelos a crear
-            users
-                id_user
-                username
-                password
-                first_name
-                last_name
-            books
-                id_book
-                title
-                publication_date
-            comments
-                id_comment
-                id_book
-                text
-                created_date
-                id_user
-        Controladores
-            Cada modelo debe tener los métodos CRUD
-            Externo: se debe consumir un api externo ( Spotify - Twitter - Marvel - OpenLibra) y entregar los datos por ese endPoint.
-            Reporte: Los datos del api externo también debe revolverse dentro de un reporte en formato PDF y Excel. 
-    Frontend
-        Vistas
-            Login
-            CRUD
-                Users
-                Books
-                    Se debe poder agregar los comentarios
-            ApiExterna
-                Se debe poder generar los reportes en los 2 formatos.
+    *** Instalacion de las dependencias:
+            Ubicate con la terminal en le directorio crud_report/ (cd crud_report o dir crud_report) y ejecuta el siguiente comando:
 
-Se debe utilizar una base de datos en SQLite.
-Se podrá utilizar cualquier FrameWork, para el API.
-El Fronted se podrá utilizar los templates nativos de framework, o una librería reactiva.
+                pip install -r requirements.txt
+
+            Se instalaran todos los requerimientos necesarios para este proyecto.
+
+- Puesta en marcha del proyecto:
+    *   Ubicate en el directorio crud_report/ e insgrese el siguiente comando:
+            python3 manage.py runserver
+        
+    **  Ingrese desde el navegador a http://127.0.0.1:8000/
+
+    *** Login:
+            Super:
+                Usuario: Desarrollador
+                Password: 123456
+            
+            No super:
+                Usuario: usuarioinvitado
+                Password: invitado1
+
+            
+
+
+El proyecto es un Crud sencillo con nivel de reportes. Los reportes se optienen por cada sección.
+El proyecto contiene:
+
+    -   CRUD Usuarios visualizado por nivel de autenticacion y reporteador.
+    -   CRUD Libros con generador de comentarios y reporteador.
+    -   CRUD de Comentarios con reporteador.
